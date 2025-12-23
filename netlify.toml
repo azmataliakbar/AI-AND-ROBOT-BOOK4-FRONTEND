@@ -8,8 +8,8 @@
   publish = "build"
 
 [build.environment]
-  # Node version
-  NODE_VERSION = "18"
+  # Node version - UPDATED TO 20
+  NODE_VERSION = "20"
 
 # Redirect rules for Single Page Application
 [[redirects]]
