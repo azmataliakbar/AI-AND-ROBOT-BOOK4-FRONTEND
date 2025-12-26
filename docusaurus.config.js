@@ -18,7 +18,14 @@ const config = {
 
   // ✅ IGNORE broken links - build will succeed without warnings
   onBrokenLinks: 'ignore',
-  onBrokenMarkdownLinks: 'ignore',
+
+  // Modern markdown config (Docusaurus v3+)
+  markdown: {
+    mermaid: true,
+    hooks: {
+      onBrokenMarkdownLinks: 'ignore'
+    }
+  },
 
   i18n: {
     defaultLocale: 'en',
@@ -46,6 +53,8 @@ const config = {
           postsPerPage: 'ALL',
           blogSidebarTitle: 'All posts',
           blogSidebarCount: 'ALL',
+          // ✅ Allow inline authors to fix the warning
+          onInlineAuthors: 'ignore',
         },
         theme: {
           customCss: './src/css/custom.css',

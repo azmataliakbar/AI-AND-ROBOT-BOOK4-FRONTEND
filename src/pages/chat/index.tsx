@@ -1,7 +1,8 @@
 // src/pages/chat/index.tsx
-import React, { useState, useRef, useEffect } from 'react';
 import Layout from '@theme/Layout';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './chat.module.css';
+import { API_ENDPOINTS } from '../../config/api';
 
 type Message = {
   id: string;
@@ -50,16 +51,16 @@ export default function Chat(): React.ReactElement {
     setIsLoading(true);
 
     try {
-      // ✅ FIXED: Call backend API with correct schema
-      const response = await fetch('http://localhost:8000/chat', {
+      // ✅ UPDATED: Uses smart config (localhost or Render based on environment)
+      const response = await fetch(API_ENDPOINTS.chat, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          query: currentQuestion,    // ✅ Changed from "message" to "query"
-          user_id: null,             // ✅ Added required field
-          chapter_id: null           // ✅ Added required field
+          query: currentQuestion,
+          user_id: null,
+          chapter_id: null
         }),
       });
 
@@ -69,7 +70,6 @@ export default function Chat(): React.ReactElement {
 
       const data = await response.json();
 
-      // ✅ FIXED: Use correct response field
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         text: data.response || 'I received your question but could not generate a response.',
@@ -80,9 +80,12 @@ export default function Chat(): React.ReactElement {
       setMessages(prev => [...prev, aiMessage]);
     } catch (error) {
       console.error('Chat error:', error);
+      
+      // More detailed error message
+      const errorDetails = error instanceof Error ? error.message : 'Unknown error';
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: 'Sorry, I encountered an error. Please make sure the backend is running at http://localhost:8000',
+        text: `I encountered an error while processing your request. Please try again. ${errorDetails.includes('Failed to fetch') ? 'Make sure the backend is running.' : ''}`,
         sender: 'ai',
         timestamp: new Date(),
       };

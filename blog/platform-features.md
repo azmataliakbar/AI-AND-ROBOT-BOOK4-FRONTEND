@@ -3,7 +3,7 @@ slug: platform-features
 title: Exploring the AI-Powered Learning Platform
 authors: azmat
 tags: [features, tutorial, ai-chat]
-date: 2024-12-23
+date: 2024-12-15
 ---
 
 # Exploring the AI-Powered Learning Platform 🚀
